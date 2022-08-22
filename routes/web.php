@@ -29,7 +29,8 @@ Route::get('/', function () {
 
 //For Admin
 Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
-    Route::get('/admin/dashboard' , [AdminController::class, 'index']);
+    Route::get('/admin/dashboard' , [AdminController::class, 'index'])->name('admin');
+    // Banner creation
     Route::get('admin/banner', [BannerController::class, 'index'])->name('banner.index');
     Route::get('admin/add/banner', [BannerController::class, 'create'])->name('banner.create');
 });
