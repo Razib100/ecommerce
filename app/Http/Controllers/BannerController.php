@@ -23,7 +23,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.banner.create');
     }
 
     /**
