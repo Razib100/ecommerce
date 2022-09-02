@@ -85,7 +85,7 @@
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#sub_menu"><i class="icon-grid"></i></a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#setting"><i class="icon-settings"></i></a></li>
             </ul>
-                
+
             <!-- Tab panes -->
             @include('backend.layouts.sidebar')
         </div>
@@ -96,7 +96,7 @@
     </div>
 
 
-    
+
 </div>
 
 <!-- Javascript -->
@@ -116,5 +116,10 @@
 <script src="{{ asset('backend/assets/bundles/datatablescripts.bundle.js')}}"></script>
 <script src="{{ asset('backend/assets/js/pages/tables/jquery-datatable.js')}}"></script>
 @yield('scripts')
+<script>
+    setTimeout(function (){
+        $('#alert').slideUp();
+    }, 5000);
+</script>
 </body>
 </html>
