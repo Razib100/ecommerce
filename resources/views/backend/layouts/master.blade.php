@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('backend/assets/vendor/morrisjs/morris.min.css')}}" />
 <link rel="stylesheet" href="{{ asset('backend/assets/summernote/summernote.css')}}" />
-
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="{{ asset('backend/assets/css/main.css')}}">
 <link rel="stylesheet" href="{{ asset('backend/assets/css/color_skins.css')}}">
@@ -115,6 +115,7 @@
 <script src="{{ asset('backend/assets/js/index.js')}}"></script>
 <script src="{{ asset('backend/assets/bundles/datatablescripts.bundle.js')}}"></script>
 <script src="{{ asset('backend/assets/js/pages/tables/jquery-datatable.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 @yield('scripts')
 <script>
     setTimeout(function (){

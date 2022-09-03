@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Banner;
 use Illuminate\Support\Str;
+use DB;
+use response;
 
 class BannerController extends Controller
 {
@@ -80,7 +82,13 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $banner = Banner::find($id);
+        if($banner){
+           return view('backend.banner.edit', compact('banner'));
+        }
+        else{
+            return back()->with('error', 'Data not found!');
+        }
     }
 
     /**
@@ -92,7 +100,25 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $banner = Banner::find($id);
+        if($banner){
+            $this->validate($request,[
+                'title'       => 'string|required',
+                'description' => 'string|nullable',
+                'photo'       =>'required',
+            ]);
+            $data       = $request->all();
+            $status       = $banner->fill($data)->save();
+            if($status){
+                return redirect()->route('banner.index')->with('success', 'Banner update successfully');
+            }
+            else{
+                return back()->with('error', 'Something went wrong');
+            }
+        }
+        else{
+            return back()->with('error', 'Data not found!');
+        }
     }
 
     /**
@@ -104,5 +130,14 @@ class BannerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function bannerStatus(Request $request){
+        if($request->mode == 'true'){
+            DB::table('banners')->where('id', $request->id)->update(['status' => 'active']);
+        } else{
+            DB::table('banners')->where('id', $request->id)->update(['status' => 'inactive']);
+        }
+        return response()->json(['msg' => 'Successfully updated status', 'status' => true]);
     }
 }

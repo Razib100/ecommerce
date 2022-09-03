@@ -59,8 +59,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    @foreach($banners as $banner)
+                                @foreach($banners as $banner)
+                                    <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$banner->title}}</td>
                                         <td>{{$banner->description}}</td>
@@ -73,18 +73,14 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($banner->status == 'active')
-                                                <span class="badge badge-success">{{$banner->status}}</span>
-                                            @else
-                                                <span class="badge badge-primary">{{$banner->status}}</span>
-                                            @endif
+                                            <input type="checkbox" name="toogle" value="{{ $banner->id }}" {{$banner->status=='active' ? 'checked' : ''}} data-toggle="toggle" data-on="Active" data-off="Inactive" data-size="sm" data-onstyle="success" data-offstyle="danger">
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                            <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('banner.edit' , $banner->id ) }}" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-outline-warning" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                                            <a href="#" data-toggle="tooltip" title="Delet" class="btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
                                         </td>
-                                    @endforeach
-                                </tr>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -94,4 +90,30 @@
         </div>
 
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $('input[name=toogle]').change(function (){
+            var mode =  $(this).prop('checked');
+            var id = $(this).val();
+            $.ajax({
+              url:"{{ route('banner.status') }}",
+              type:"POST",
+              data:{
+                  _token: '{{csrf_token()}}',
+                    mode:mode,
+                      id:id,
+              },
+                success:function (response){
+                  if(response.status){
+                      alert(response.msg);
+                  }
+                  else{
+                      alert('Please try again!');
+                  }
+                }
+            })
+        })
+    </script>
 @endsection
