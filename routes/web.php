@@ -20,19 +20,20 @@ Route::get('/', function () {
     return view('frontend.master');
 });
 
-// Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
-
-
 //For Admin
 Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
     Route::get('/admin/dashboard' , [AdminController::class, 'index'])->name('admin');
     // Banner creation
-    Route::get('admin/banner', [BannerController::class, 'index'])->name('banner.index');
-    Route::get('admin/add/banner', [BannerController::class, 'create'])->name('banner.create');
+    Route::controller(BannerController::class)->group(function(){
+        Route::get('banners', 'index')->name('banner.index');
+        Route::post('banners', 'store')->name('banner.store');
+        Route::get('banners/create', 'create')->name('banner.create');
+        Route::get('banners/{id}', 'show')->name('banner.show');
+        Route::put('banners/{id}', 'update')->name('banner.update');
+        Route::delete('banners/{id}', 'destroy')->name('banner.destroy');
+        Route::get('banners/{id}/edit', 'edit')->name('banner.edit');
+        Route::post('banner/status', 'bannerStatus')->name('banner.status');
+    });
 });
 
 //For Admin
@@ -40,7 +41,7 @@ Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
     Route::get('/vendor/dashboard' , [VendorController::class, 'index']);
 });
 
-//For User or Customer
+//For User ogit r Customer
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     // Route::get('/user/dashboard',[CustomerController::class, 'index']);
 });

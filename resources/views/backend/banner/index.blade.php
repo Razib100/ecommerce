@@ -26,6 +26,9 @@
         </div>
 
         <div class="row clearfix">
+            <div class="col-md-12">
+                @include('backend.layouts.notification')
+            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="header">
@@ -47,179 +50,37 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Class Name</th>
-                                    <th>Student Name</th>
-                                    <th>Teacher</th>
-                                    <th>Numeric Name</th>
-                                    <th>Options</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Photo</th>
+                                    <th>Condition</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>BCA Sem1</td>
-                                    <td>Christina Thomas</td>
-                                    <td>Juan Freeman</td>
-                                    <td>112</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>BCA Sem2</td>
-                                    <td>Christina Thomas</td>
-                                    <td>Juan Freeman</td>
-                                    <td>321</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>BBA Sem1</td>
-                                    <td>Christina Thomas</td>
-                                    <td>Juan Freeman</td>
-                                    <td>1323</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>164</td>
-                                    <td>BCA Sem1</td>
-                                    <td>Christina Thomas</td>
-                                    <td>John</td>
-                                    <td>1</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>56</td>
-                                    <td>BCA Sem2</td>
-                                    <td>Christina Thomas</td>
-                                    <td>Juan Freeman</td>
-                                    <td>1</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>22</td>
-                                    <td>BBA Sem1</td>
-                                    <td>Christina Thomas</td>
-                                    <td>John</td>
-                                    <td>1</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>MCA Sem5</td>
-                                    <td>Hossein Shams</td>
-                                    <td>Michael</td>
-                                    <td>28</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>B.E Computar</td>
-                                    <td>Maryam Amiri</td>
-                                    <td>Michael</td>
-                                    <td>28</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>BBA Sem1</td>
-                                    <td>Tim Hank</td>
-                                    <td>Juan Freeman</td>
-                                    <td>18</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>BCA Sem1</td>
-                                    <td>Christina Thomas</td>
-                                    <td>Juan Freeman</td>
-                                    <td>18</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>BCA Sem2</td>
-                                    <td>Fidel Tonn</td>
-                                    <td>Juan Freeman</td>
-                                    <td>19</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>12</td>
-                                    <td>B.E Computer</td>
-                                    <td>Gary Camara</td>
-                                    <td>Juan Freeman</td>
-                                    <td>19</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>12</td>
-                                    <td>MCA Sem6</td>
-                                    <td>CFrank Camly</td>
-                                    <td>Juan Freeman</td>
-                                    <td>11</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>13</td>
-                                    <td>BCA Sem5</td>
-                                    <td>Christina Thomas</td>
-                                    <td>John </td>
-                                    <td>11</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>14</td>
-                                    <td>B.Com Sem3</td>
-                                    <td>Christina Thomas</td>
-                                    <td>Juan Freeman</td>
-                                    <td>11</td>
-                                    <td>
-                                        <a href="javascript:void(0);"><i class="fa fa-pencil m-r-15"></i></a>
-                                        <a href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
+                                @foreach($banners as $banner)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$banner->title}}</td>
+                                        <td>{{$banner->description}}</td>
+                                        <td><img src="{{$banner->photo}}" alt="Banner-image" style="max-height: 90px; max-width: 120px;"></td>
+                                        <td>
+                                            @if($banner->condition == 'banner')
+                                                <span class="badge badge-success">{{$banner->condition}}</span>
+                                            @else
+                                                <span class="badge badge-primary">{{$banner->condition}}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="toogle" value="{{ $banner->id }}" {{$banner->status=='active' ? 'checked' : ''}} data-toggle="toggle" data-on="Active" data-off="Inactive" data-size="sm" data-onstyle="success" data-offstyle="danger">
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('banner.edit' , $banner->id ) }}" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-outline-warning" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                                            <a href="#" data-toggle="tooltip" title="Delet" class="btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -229,4 +90,30 @@
         </div>
 
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $('input[name=toogle]').change(function (){
+            var mode =  $(this).prop('checked');
+            var id = $(this).val();
+            $.ajax({
+              url:"{{ route('banner.status') }}",
+              type:"POST",
+              data:{
+                  _token: '{{csrf_token()}}',
+                    mode:mode,
+                      id:id,
+              },
+                success:function (response){
+                  if(response.status){
+                      alert(response.msg);
+                  }
+                  else{
+                      alert('Please try again!');
+                  }
+                }
+            })
+        })
+    </script>
 @endsection
