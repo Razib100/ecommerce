@@ -43,8 +43,8 @@ class BannerController extends Controller
             'title'       => 'string|required',
             'description' => 'string|nullable',
             'photo'       =>'required',
-            'status'      => 'nullable|in:active, inactive',
-            'condition'   => 'nullable|in:banner, promo',
+            'status'      => 'required',
+            'condition'   => 'required',
         ]);
         $data       = $request->all();
         $slug       = Str::slug($request->input('title'));
@@ -129,7 +129,19 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $banner = Banner::find($id);
+        if($banner){
+            $status = $banner->delete($id);
+            if($status){
+                return redirect()->route('banner.index')->with('success', 'Banner delete successfully');
+            }
+            else {
+                return back()->with('error', 'Something went wrong!');
+            }
+        }
+        else{
+            return back()->with('error', 'Data not found!');
+        }
     }
 
     public function bannerStatus(Request $request){
