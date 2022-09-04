@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +34,17 @@ Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
         Route::delete('banners/{id}', 'destroy')->name('banner.destroy');
         Route::get('banners/{id}/edit', 'edit')->name('banner.edit');
         Route::post('banner/status', 'bannerStatus')->name('banner.status');
+    });
+//    Category creation
+    Route::controller(CategoryController::class)->group(function(){
+        Route::get('categories', 'index')->name('category.index');
+        Route::post('categories', 'store')->name('category.store');
+        Route::get('categories/create', 'create')->name('category.create');
+        Route::get('categories/{id}', 'show')->name('category.show');
+        Route::put('categories/{id}', 'update')->name('category.update');
+        Route::delete('categories/{id}', 'destroy')->name('category.destroy');
+        Route::get('categories/{id}/edit', 'edit')->name('category.edit');
+        Route::post('categories/status', 'categoryStatus')->name('category.status');
     });
 });
 
