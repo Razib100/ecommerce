@@ -3,24 +3,15 @@
     <div class="container-fluid">
         <div class="block-header">
             <div class="row">
-                <div class="col-lg-6 col-md-8 col-sm-12">
-                    <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Classroom</h2>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
-                        <li class="breadcrumb-item active">Classroom</li>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Banners
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('banner.create') }}"><i class="icon-plus"></i>Create Banner</a>
+                    </h2>
+                    <ul class="float-left breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('admin') }}"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Banner</li>
                     </ul>
-                </div>
-                <div class="col-lg-6 col-md-4 col-sm-12 text-right">
-                    <div class="inlineblock text-center m-r-15 m-l-15 hidden-sm">
-                        <div class="sparkline text-left" data-type="line" data-width="8em" data-height="20px" data-line-Width="1" data-line-Color="#00c5dc"
-                             data-fill-Color="transparent">3,5,1,6,5,4,8,3</div>
-                        <span>Visitors</span>
-                    </div>
-                    <div class="inlineblock text-center m-r-15 m-l-15 hidden-sm">
-                        <div class="sparkline text-left" data-type="line" data-width="8em" data-height="20px" data-line-Width="1" data-line-Color="#f4516c"
-                             data-fill-Color="transparent">4,6,3,2,5,6,5,4</div>
-                        <span>Visits</span>
-                    </div>
+                    <p class="float-right">Total Banners: {{ \App\Models\Banner::count() }}</p>
                 </div>
             </div>
         </div>
@@ -32,7 +23,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="header">
-                        <h2><strong>Class</strong> List</h2>
+                        <h2><strong>Banner</strong> Lists</h2>
                         <ul class="header-dropdown">
                             <li class="dropdown">
                                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
@@ -63,7 +54,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$banner->title}}</td>
-                                        <td>{{$banner->description}}</td>
+                                        <td>{!! html_entity_decode(substr($banner->description, 0,  50)) !!}</td>
                                         <td><img src="{{$banner->photo}}" alt="Banner-image" style="max-height: 90px; max-width: 120px;"></td>
                                         <td>
                                             @if($banner->condition == 'banner')
@@ -76,8 +67,12 @@
                                             <input type="checkbox" name="toogle" value="{{ $banner->id }}" {{$banner->status=='active' ? 'checked' : ''}} data-toggle="toggle" data-on="Active" data-off="Inactive" data-size="sm" data-onstyle="success" data-offstyle="danger">
                                         </td>
                                         <td>
-                                            <a href="{{ route('banner.edit' , $banner->id ) }}" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-outline-warning" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                                            <a href="#" data-toggle="tooltip" title="Delet" class="btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="{{ route('banner.edit' , $banner->id ) }}" data-toggle="tooltip" title="Edit" class="float-left btn btn-sm btn-outline-warning" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                                            <form class="float-left ml-2" action="{{ route('banner.destroy', $banner->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <a href="#" data-toggle="tooltip" title="Delet" data-id="{{ $banner->id }}" class="dtlbtn btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -93,6 +88,36 @@
 @endsection
 
 @section('scripts')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.dtlbtn').click(function (e){
+            var form = $(this).closest('form');
+            var dataID = $(this).data('id');
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                        swal("Poof! Your imaginary file has been deleted!", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
+        })
+    </script>
     <script>
         $('input[name=toogle]').change(function (){
             var mode =  $(this).prop('checked');

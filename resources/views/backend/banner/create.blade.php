@@ -97,7 +97,19 @@
       $('#description').summernote({
         placeholder: 'Hello Bootstrap 5',
         tabsize: 2,
-        height: 100
-      });
+        height: 100,
+          callbacks: {
+              onPaste: function (e) {
+                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+
+                  e.preventDefault();
+
+                  // Firefox fix
+                  setTimeout(function () {
+                      document.execCommand('insertText', false, bufferText);
+                  }, 10);
+              }
+          }
+          });
     </script>
 @endsection
