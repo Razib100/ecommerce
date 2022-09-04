@@ -4,11 +4,11 @@
             <div class="block-header">
                 <div class="row">
                     <div class="col-lg-6 col-md-8 col-sm-12">
-                        <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Add Banners</h2>
+                        <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Add Category</h2>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin')}}"><i class="icon-home"></i></a></li>
-                            <li class="breadcrumb-item">Banners</li>
-                            <li class="breadcrumb-item active">Add Banners</li>
+                            <li class="breadcrumb-item">Category</li>
+                            <li class="breadcrumb-item active">Add Category</li>
                         </ul>
                     </div>
                 </div>
@@ -30,18 +30,18 @@
                     </div>
                     <div class="card">
                         <div class="body">
-                            <form action="{{ route('banner.store') }}" method="post">
+                            <form action="{{ route('category.store') }}" method="post">
                                 @csrf
                                 <div class="row clearfix">
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
-                                        <label for="">Title <span class="text-danger">*</span></label>
+                                        <label for="">Title:<span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title')}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group mt-3">
-                                        <label for="">Photo</label>
+                                        <label for="">Photo:</label>
                                              <div class="input-group">
                                             <span class="input-group-btn">
                                                 <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
@@ -55,24 +55,29 @@
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group mt-3">
-                                        <label for="">Descritption</label>
-                                            <textarea id="description" class="form-control no-resize" placeholder="Description" name="description">{{ old('description')}}</textarea>
+                                        <label for="">Descritption:</label>
+                                            <textarea id="description" class="form-control no-resize" placeholder="Description" name="summary">{{ old('summary')}}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <label for="">Status <span class="text-danger">*</span></label>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <label for="">Parent: <span class="text-danger">*</span></label>
+                                        <input id="is_parent" type="checkbox" name="is_parent" value="1" checked>Yes
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 d-none" id="parent_cat_div">
+                                        <label for="">Parent Categoryv: <span class="text-danger">*</span></label>
+                                        <select name="parent_id" class="form-control show-tick">
+                                            <option value="">-- Parent Category --</option>
+                                            @foreach($parent_cats as $pcats)
+                                                <option value="{{ $pcats->id }}">{{ $pcats->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <label for="">Status:<span class="text-danger">*</span></label>
                                         <select name="status" class="form-control show-tick">
                                             <option value="">-- Status --</option>
                                             <option value="active" {{ old('status' == 'active' ? 'selected' : '')}}>Active</option>
                                             <option value="inactive" {{ old('status' == 'inactive' ? 'selected' : '')}}>Inactive</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <label for="">Condition <span class="text-danger">*</span></label>
-                                       <select name="condition" class="form-control show-tick">
-                                            <option value="">-- Status --</option>
-                                            <option value="banner" {{ old('condition' == 'banner' ? 'selected' : '')}}>Banner</option>
-                                            <option value="pormo" {{ old('condition' == 'pormo' ? 'selected' : '')}}>Promotional</option>
                                         </select>
                                     </div>
                                 </div>
@@ -109,5 +114,18 @@
               }
           }
           });
+    </script>
+    <script>
+        $('#is_parent').change(function (e){
+            e.preventDefault();
+            var is_checked = $('#is_parent').prop('checked');
+            if(is_checked){
+                $('#parent_cat_div').addClass('d-none');
+                $('#parent_cat_div').val('');
+            }
+            else{
+                $('#parent_cat_div').removeClass('d-none');
+            }
+        })
     </script>
 @endsection

@@ -4,14 +4,14 @@
         <div class="block-header">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Banners
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('banner.create') }}"><i class="icon-plus"></i>Create Banner</a>
+                    <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Categoriees
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('category.create') }}"><i class="icon-plus"></i>Create Categpry</a>
                     </h2>
                     <ul class="float-left breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('admin') }}"><i class="icon-home"></i></a></li>
-                        <li class="breadcrumb-item active">Banner</li>
+                        <li class="breadcrumb-item active">Category</li>
                     </ul>
-                    <p class="float-right">Total Banners: {{ \App\Models\Banner::count() }}</p>
+                    <p class="float-right">Total Categories: {{ \App\Models\Category::count() }}</p>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="header">
-                        <h2><strong>Banner</strong> Lists</h2>
+                        <h2><strong>Category</strong> Lists</h2>
                     </div>
                     <div class="body">
                         <div class="table-responsive">
@@ -32,36 +32,32 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Title</th>
-                                    <th>Description</th>
+                                    <th>Summary</th>
                                     <th>Photo</th>
-                                    <th>Condition</th>
+                                    <th>Is Parent</th>
+                                    <th>Parents</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($banners as $banner)
+                                @foreach($categories as $item)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$banner->title}}</td>
-                                        <td>{!! html_entity_decode(substr($banner->description, 0,  50)) !!}</td>
-                                        <td><img src="{{$banner->photo}}" alt="Banner-image" style="max-height: 90px; max-width: 120px;"></td>
+                                        <td>{{$item->title}}</td>
+                                        <td>{!! html_entity_decode(substr($item->summary, 0,  50)) !!}</td>
+                                        <td><img src="{{$item->photo}}" alt="Banner-image" style="max-height: 90px; max-width: 120px;"></td>
+                                        <td>{{ $item->is_parent === 1 ? 'Yes' : 'No' }}</td>
+                                        <td>{{ \App\Models\Category::where('id', $item->parent_id)->value('title') }}</td>
                                         <td>
-                                            @if($banner->condition == 'banner')
-                                                <span class="badge badge-success">{{$banner->condition}}</span>
-                                            @else
-                                                <span class="badge badge-primary">{{$banner->condition}}</span>
-                                            @endif
+                                            <input type="checkbox" name="toogle" value="{{ $item->id }}" {{$item->status=='active' ? 'checked' : ''}} data-toggle="toggle" data-on="Active" data-off="Inactive" data-size="sm" data-onstyle="success" data-offstyle="danger">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="toogle" value="{{ $banner->id }}" {{$banner->status=='active' ? 'checked' : ''}} data-toggle="toggle" data-on="Active" data-off="Inactive" data-size="sm" data-onstyle="success" data-offstyle="danger">
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('banner.edit' , $banner->id ) }}" data-toggle="tooltip" title="Edit" class="float-left btn btn-sm btn-outline-warning" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                                            <form class="float-left ml-2" action="{{ route('banner.destroy', $banner->id) }}" method="post">
+                                            <a href="{{ route('category.edit' , $item->id ) }}" data-toggle="tooltip" title="Edit" class="float-left btn btn-sm btn-outline-warning" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                                            <form class="float-left ml-2" action="{{ route('category.destroy', $item->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <a href="#" data-toggle="tooltip" title="Delet" data-id="{{ $banner->id }}" class="dtlbtn btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
+                                                <a href="#" data-toggle="tooltip" title="Delet" data-id="{{ $item->id }}" class="dtlbtn btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
                                             </form>
                                         </td>
                                     </tr>
@@ -113,7 +109,7 @@
             var mode =  $(this).prop('checked');
             var id = $(this).val();
             $.ajax({
-              url:"{{ route('banner.status') }}",
+              url:"{{ route('category.status') }}",
               type:"POST",
               data:{
                   _token: '{{csrf_token()}}',
