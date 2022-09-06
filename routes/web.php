@@ -6,6 +6,8 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +47,28 @@ Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
         Route::delete('categories/{id}', 'destroy')->name('category.destroy');
         Route::get('categories/{id}/edit', 'edit')->name('category.edit');
         Route::post('categories/status', 'categoryStatus')->name('category.status');
+    });
+    //    Brand creation
+    Route::controller(BrandController::class)->group(function(){
+        Route::get('brands', 'index')->name('brand.index');
+        Route::post('brands', 'store')->name('brand.store');
+        Route::get('brands/create', 'create')->name('brand.create');
+        Route::get('brands/{id}', 'show')->name('brand.show');
+        Route::put('brands/{id}', 'update')->name('brand.update');
+        Route::delete('brands/{id}', 'destroy')->name('brand.destroy');
+        Route::get('brands/{id}/edit', 'edit')->name('brand.edit');
+        Route::post('brands/status', 'brandStatus')->name('brand.status');
+    });
+    //    Product creation
+    Route::controller(ProductController::class)->group(function(){
+        Route::get('products', 'index')->name('product.index');
+        Route::post('products', 'store')->name('product.store');
+        Route::get('products/create', 'create')->name('product.create');
+        Route::get('products/{id}', 'show')->name('product.show');
+        Route::put('products/{id}', 'update')->name('product.update');
+        Route::delete('products/{id}', 'destroy')->name('product.destroy');
+        Route::get('products/{id}/edit', 'edit')->name('product.edit');
+        Route::post('products/status', 'productStatus')->name('product.status');
     });
 });
 
