@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Banner;
+use App\Models\Category;
+use App\Models\Brand;
+use Illuminate\Support\Str;
+use DB;
+use response;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,7 +20,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::orderBy('id', 'DESC')->get();
+        return view('backend.product.index', compact('products'));
     }
 
     /**
@@ -80,5 +88,13 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function productStatus(Request $request){
+        if($request->mode == 'true'){
+            DB::table('products')->where('id', $request->id)->update(['status' => 'active']);
+        } else{
+            DB::table('products')->where('id', $request->id)->update(['status' => 'inactive']);
+        }
+        return response()->json(['msg' => 'Successfully updated status', 'status' => true]);
     }
 }
