@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.product.create');
     }
 
     /**
@@ -42,7 +42,33 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'title'       => 'string|required',
+            'summary'     => 'string|nullable',
+            'description' => 'string|nullable',
+            'photo'       =>'required',
+            'stock'       => 'nullable|numeric',
+            'price'       => 'nullable|numeric',
+            'discount'    => 'nullable|numeric',
+            'size'        => 'nullable',
+            'conditions'  => 'nullable',
+            'status'      => 'nullable',
+        ]);
+        $data       = $request->all();
+        $slug       = Str::slug($request->input('title'));
+        $slug_count = Product::where('slug' , $slug)->count();
+        if($slug_count>0){
+            $slug = time(). '-'. $slug;
+        }
+        $data['slug'] =$slug;
+        $data['offer_price'] = ($request->price-(($request->price*$request->discount)/100));
+        $status       = Product::create($data);
+        if($status){
+            return redirect()->route('product.index')->with('success', 'Product create successfully');
+        }
+        else{
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
     /**
@@ -64,7 +90,13 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        if($product){
+            return view('backend.product.edit', compact('product'));
+        }
+        else{
+            return back()->with('error', 'Data not found!');
+        }
     }
 
     /**
@@ -76,7 +108,35 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        if($product){
+            $this->validate($request,[
+                'title'       => 'string|required',
+                'summary'     => 'string|nullable',
+                'description' => 'string|nullable',
+                'photo'       =>'required',
+                'stock'       => 'nullable|numeric',
+                'price'       => 'nullable|numeric',
+                'discount'    => 'nullable|numeric',
+                'size'        => 'nullable',
+                'conditions'  => 'nullable',
+                'status'      => 'nullable',
+            ]);
+            $data       = $request->all();
+            $slug       = Str::slug($request->input('title'));
+            $data['slug'] =$slug;
+            $data['offer_price'] = ($request->price-(($request->price*$request->discount)/100));
+            $status       = $product->fill($data)->save();
+            if($status){
+                return redirect()->route('product.index')->with('success', 'Product update successfully');
+            }
+            else{
+                return back()->with('error', 'Something went wrong');
+            }
+        }
+        else{
+            return back()->with('error', 'Data not found!');
+        }
     }
 
     /**
@@ -87,7 +147,19 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if($product){
+            $status = $product->delete($id);
+            if($status){
+                return redirect()->route('product.index')->with('success', 'Product delete successfully');
+            }
+            else {
+                return back()->with('error', 'Something went wrong!');
+            }
+        }
+        else{
+            return back()->with('error', 'Data not found!');
+        }
     }
     public function productStatus(Request $request){
         if($request->mode == 'true'){

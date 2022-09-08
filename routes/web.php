@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
         Route::delete('categories/{id}', 'destroy')->name('category.destroy');
         Route::get('categories/{id}/edit', 'edit')->name('category.edit');
         Route::post('categories/status', 'categoryStatus')->name('category.status');
+        Route::post('category/{id}/child', 'getChildByParentID')->name('category.update-by-id');
     });
     //    Brand creation
     Route::controller(BrandController::class)->group(function(){
