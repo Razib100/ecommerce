@@ -8,6 +8,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +48,7 @@ Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
         Route::delete('categories/{id}', 'destroy')->name('category.destroy');
         Route::get('categories/{id}/edit', 'edit')->name('category.edit');
         Route::post('categories/status', 'categoryStatus')->name('category.status');
+        Route::post('category/{id}/child', 'getChildByParentID')->name('category.update-by-id');
     });
     //    Brand creation
     Route::controller(BrandController::class)->group(function(){
@@ -69,6 +71,11 @@ Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
         Route::delete('products/{id}', 'destroy')->name('product.destroy');
         Route::get('products/{id}/edit', 'edit')->name('product.edit');
         Route::post('products/status', 'productStatus')->name('product.status');
+    });
+    //    User creation
+    Route::resource('user',\App\Http\Controllers\UserController::class);
+    Route::controller(UserController::class)->group(function(){
+        Route::post('users/status', 'userStatus')->name('user.status');
     });
 });
 
