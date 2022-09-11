@@ -22,6 +22,7 @@
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="{{ asset('backend/assets/css/main.css')}}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/custom.css')}}">
 <link rel="stylesheet" href="{{ asset('backend/assets/css/color_skins.css')}}">
 <style>
     .icon-menu:before{display:none !important};

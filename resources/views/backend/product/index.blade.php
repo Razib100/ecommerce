@@ -72,7 +72,7 @@
                                             <form class="float-left ml-2" action="{{ route('product.destroy', $item->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <a href="#" data-toggle="tooltip" title="Delet" data-id="{{ $item->id }}" class="dtlbtn btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
+                                                <a href="#" data-toggle="tooltip" title="Delete" data-id="{{ $item->id }}" class="dtlbtn btn btn-sm btn-outline-danger" data-placement="bottom"><i class="fas fa-trash-alt"></i></a>
                                             </form>
                                         </td>
                                         <!-- Modal -->
