@@ -20,9 +20,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.master');
-});
+Route::get('/', [App\Http\Controllers\frontend\IndexController::class,'home'])->name('home');
 
 //For Admin
 Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
