@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+@extends('frontend.layouts.master')
 @section('content')
     <!-- Welcome Slides Area -->
     <section class="welcome_area">

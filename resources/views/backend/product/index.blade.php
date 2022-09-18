@@ -43,9 +43,9 @@
                                 </thead>
                                 <tbody>
                                 @foreach($products as $item)
-                                    @php
-                                        $photo = explode(',' ,$item->photo);
-                                    @endphp
+                                        @php
+                                            $photo = explode(',' ,$item->photo);
+                                        @endphp
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$item->title}}</td>
