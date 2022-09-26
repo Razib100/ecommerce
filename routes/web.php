@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [App\Http\Controllers\frontend\IndexController::class,'home'])->name('home');
 Route::get('/product-category/{slug}/', [App\Http\Controllers\frontend\IndexController::class,'ProductCategory'])->name('product.category');
+Route::get('/product-details/{slug}/', [App\Http\Controllers\frontend\IndexController::class,'ProductDetails'])->name('product.details');
 
 //For Admin
 Route::middleware(['auth:sanctum', 'verified', 'authAdmin'])->group(function(){
