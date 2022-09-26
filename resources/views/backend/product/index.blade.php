@@ -43,14 +43,14 @@
                                 </thead>
                                 <tbody>
                                 @foreach($products as $item)
-                                    @php
-                                        $photo = explode(',' ,$item->photo);
-                                    @endphp
+                                        @php
+                                            $photo = explode(',' ,$item->photo);
+                                        @endphp
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$item->title}}</td>
 
-                                        <td><img src="{{$item->photo[0]}}" alt="Banner-image" style="max-height: 90px; max-width: 120px;"></td>
+                                        <td><img src="{{$photo[0]}}" alt="Banner-image" style="max-height: 90px; max-width: 120px;"></td>
                                         <td>{{number_format($item->price,2)}}$</td>
                                         <td>{{number_format($item->discount,2)}}%</td>
                                         <td>{{$item->size}}</td>

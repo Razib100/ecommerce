@@ -1,69 +1,37 @@
-@extends('backend.layouts.master')
+@extends('frontend.layouts.master')
 @section('content')
     <!-- Welcome Slides Area -->
     <section class="welcome_area">
         <div class="welcome_slides owl-carousel">
             <!-- Single Slide -->
-            <div class="single_slide bg-img" style="background-image: url('{{ asset('frontend/img/bg-img/8.jpg')}}');">
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-7 col-md-8">
-                            <div class="welcome_slide_text">
-                                <p data-animation="fadeInUp" data-delay="0">Special Offer</p>
-                                <h2 data-animation="fadeInUp" data-delay="300ms">40% Off Today</h2>
-                                <h4 data-animation="fadeInUp" data-delay="600ms">Only $78</h4>
-                                <a href="#" class="btn btn-primary" data-animation="fadeInUp" data-delay="1s">Buy
-                                    Now</a>
-                            </div>
-                        </div>
-                        <div class="col-5 col-md-4">
-                            <div class="welcome_slide_image">
-                                <img src="{{ asset('frontend')}}/img/bg-img/slide-1.png" alt="" data-animation="bounceInUp" data-delay="500ms">
-                                <div class="discount_badge" data-animation="bounceInDown" data-delay="1.2s">
-                                    <span>30%<br>OFF</span>
+            @if($banners->count() > 0)
+                @foreach($banners as $item)
+                    <div class="single_slide bg-img" style="background-image: url('{{ $item->photo }}');">
+                        <div class="container h-100">
+                            <div class="row h-100 align-items-center">
+                                <div class="col-7 col-md-8">
+                                    <div class="welcome_slide_text">
+                                        <p data-animation="fadeInUp" data-delay="0">Special Offer</p>
+                                        <h2 data-animation="fadeInUp" data-delay="300ms">40% Off Today</h2>
+                                        <h4 data-animation="fadeInUp" data-delay="600ms">Only $78</h4>
+                                        <a href="#" class="btn btn-primary" data-animation="fadeInUp" data-delay="1s">Buy
+                                            Now</a>
+                                    </div>
+                                </div>
+                                <div class="col-5 col-md-4">
+                                    <div class="welcome_slide_image">
+                                        <img src="{{ $item->photo }}" alt="" data-animation="bounceInUp" data-delay="500ms">
+                                        <div class="discount_badge" data-animation="bounceInDown" data-delay="1.2s">
+                                            <span>30%<br>OFF</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                @endforeach
+            @endif
 
-            <!-- Single Slide -->
-            <div class="single_slide bg-img" style="background-image: url('{{ asset('frontend/img/bg-img/7.jpg')}}');">
-                <div class="container h-100">
-
-
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12 col-md-8">
-                            <div class="welcome_slide_text">
-                                <p data-animation="fadeInUp" data-delay="0">Sustainable Clock</p>
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Smart Watch</h2>
-                                <h4 data-animation="fadeInUp" data-delay="600ms">Only $31 <span
-                                        class="regular-price">$43</span></h4>
-                                <a href="#" class="btn btn-primary" data-animation="fadeInUp" data-delay="600ms">Check
-                                    Collection</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Slide -->
-            <div class="single_slide bg-img" style="background-image: url('{{ asset('frontend/img/bg-img/6.jpg')}}');">
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center">
-                        <div class="col-12 col-md-6">
-                            <div class="welcome_slide_text">
-                                <p class="text-white" data-animation="fadeInUp" data-delay="0">100% Cotton</p>
-                                <h2 class="text-white" data-animation="fadeInUp" data-delay="300ms">Hot Shoes</h2>
-                                <h4 class="text-white" data-animation="fadeInUp" data-delay="600ms">Now $19</h4>
-                                <a href="#" class="btn btn-primary" data-animation="fadeInUp" data-delay="900ms">Add to
-                                    cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     <!-- Welcome Slides Area -->
@@ -73,31 +41,17 @@
         <div class="container">
             <div class="row">
                 <!-- Single Catagory -->
-                <div class="col-12 col-md-4">
-                    <div class="single_catagory_area mt-50">
-                        <a href="#">
-                            <img src="{{ asset('frontend')}}/img/bg-img/c1.jpg" alt="">
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="col-12 col-md-4">
-                    <div class="single_catagory_area mt-50">
-                        <a href="#">
-                            <img src="{{ asset('frontend')}}/img/bg-img/c2.jpg" alt="">
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="col-12 col-md-4">
-                    <div class="single_catagory_area mt-50">
-                        <a href="#">
-                            <img src="{{ asset('frontend')}}/img/bg-img/c3.jpg" alt="">
-                        </a>
-                    </div>
-                </div>
+                @if($categories->count() > 0)
+                    @foreach($categories as $category)
+                        <div class="col-12 col-md-4">
+                            <div class="single_catagory_area mt-50">
+                                <a href="{{ route('product.category', $category->slug) }}">
+                                    <img src="{{ $category->photo }}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
@@ -178,7 +132,9 @@
         </div>
     </div>
     <!-- Quick View Modal Area -->
-
+    @php
+        $new_products = App\Models\Product::where(['status' => 'active', 'conditions' => 'new'])->orderby('id', 'DESC')->limit('18')->get();
+    @endphp
     <!-- New Arrivals Area -->
     <section class="new_arrivals_area section_padding_100 clearfix">
         <div class="container">
@@ -193,215 +149,56 @@
             <div class="row">
                 <div class="col-12">
                     <div class="new_arrivals_slides owl-carousel">
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="{{ asset('frontend')}}/img/product-img/new-1-back.png" alt="">
-                                <img class="hover_img" src="{{ asset('frontend')}}/img/product-img/new-1.png" alt="">
+                        @if($new_products->count() > 0)
+                            @foreach($new_products as $item)
+                                <!-- Single Product -->
+                                <div class="single-product-area">
+                                    <div class="product_image">
+                                        @php
+                                            $photos = explode(',', $item->photo)
+                                        @endphp
+                                        <!-- Product Image -->
+                                        <img class="normal_img" src="{{ $photos[0] }}" alt="">
+                                        <img class="hover_img" src="{{ $photos[0] }}" alt="">
 
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
+                                        <!-- Product Badge -->
+                                        <div class="product_badge">
+                                            <span>New</span>
+                                        </div>
+
+                                        <!-- Wishlist -->
+                                        <div class="product_wishlist">
+                                            <a href="wishlist.html"><i class="icofont-heart"></i></a>
+                                        </div>
+
+                                        <!-- Compare -->
+                                        <div class="product_compare">
+                                            <a href="compare.html"><i class="icofont-exchange"></i></a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Description -->
+                                    <div class="product_description">
+                                        <!-- Add to cart -->
+                                        <div class="product_add_to_cart">
+                                            <a href="#"><i class="icofont-shopping-cart"></i> Add to Cart</a>
+                                        </div>
+
+                                        <!-- Quick View -->
+                                        <div class="product_quick_view">
+                                            <a href="#" data-toggle="modal" data-target="#quickview"><i
+                                                    class="icofont-eye-alt"></i> Quick View</a>
+                                        </div>
+
+                                        <p class="brand_name">{{ App\Models\Brand::where('id', $item->brand_id)->value('title') }}</p>
+                                        <a href="{{ route('product.details', $item->slug) }}">{{ ucfirst($item->title) }}</a>
+                                        <h6 class="product-price">${{ number_format($item->offer_price, 2) }} <del class="text-danger">{{ number_format($item->price, 2) }}</del></h6>
+                                    </div>
                                 </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Top</p>
-                                <a href="#">Boutique Silk Dress</a>
-                                <h6 class="product-price">$48.99</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="{{ asset('frontend')}}/img/product-img/new-6.png" alt="">
-                                <img class="hover_img" src="{{ asset('frontend')}}/img/product-img/new-6-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Lim</p>
-                                <a href="#">Gracia Plaid Dress</a>
-                                <h6 class="product-price">$17.63</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="{{ asset('frontend')}}/img/product-img/new-2.png" alt="">
-                                <img class="hover_img" src="{{ asset('frontend')}}/img/product-img/new-2-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Sarah</p>
-                                <a href="#">Flower Textured Dress</a>
-                                <h6 class="product-price">$24 <span>$49</span></h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="{{ asset('frontend')}}/img/product-img/new-4.png" alt="">
-                                <img class="hover_img" src="{{ asset('frontend')}}/img/product-img/new-4-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Lim</p>
-                                <a href="#">Gracia Plaid Dress</a>
-                                <h6 class="product-price">$78.24</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="{{ asset('frontend')}}/img/product-img/new-5.png" alt="">
-                                <img class="hover_img" src="{{ asset('frontend')}}/img/product-img/new-5-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Lim</p>
-                                <a href="#">Gracia Plaid Dress</a>
-                                <h6 class="product-price">$34 <span>$48</span></h6>
-                            </div>
-                        </div>
+                            @endforeach
+                        @else
+                            <p>No Product found</p>
+                        @endif
                     </div>
                 </div>
             </div>
